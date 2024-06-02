@@ -21,7 +21,7 @@ deploy:
   app: "dockr-react"
   env: "Dockr-react-env"
   bucket_name: "elasticbeanstalk-ap-northeast-2-851725594694"
-  bucket_path: "elasticbeanstalk-ap-northeast-2-851725594694"
+  bucket_path: "dockr-react"
   on:
     branch: main
   access_key_id: $AWS_ACCESS_KEY
