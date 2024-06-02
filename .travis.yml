@@ -14,3 +14,13 @@ script:
 
 after_success:
   - echo "test success"
+
+deploy:
+  provider: elasticbeanstalk
+  region: "ap-northeast-2"
+  app: "dockr-react"
+  env: "Dockr-react-env"
+  bucket_name: "elasticbeanstalk-ap-northeast-2-851725594694"
+  bucket_path: "elasticbeanstalk-ap-northeast-2-851725594694"
+  on:
+    branch: master
