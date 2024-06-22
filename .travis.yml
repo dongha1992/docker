@@ -2,13 +2,13 @@ language: generic
 sudo: required
 services:
   - docker
-before_install: 
-  - docker build -t donghakim1992/react-app -f ./client/Dockerfile.dev ./client
+before_install:
+  - docker build -t donghakim1992/docker-with-react -f ./client/Dockerfile.dev ./client
 
-script: 
-  - docker rum -e CI=true donghakim1992/react-app npm run test
+script:
+  - docker rum -e CI=true donghakim1992/docker-with-react npm run test
 
-after_success: 
+after_success:
   - docker build -t donghakim1992/docker-client ./client
   - docker build -t donghakim1992/docker-backend ./backend
   - docker build -t donghakim1992/docker-nginx ./nginx
