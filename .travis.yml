@@ -6,7 +6,7 @@ before_install:
   - docker build -t donghakim1992/docker-with-react -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker rum -e CI=true donghakim1992/docker-with-react npm run test
+  - docker run -e CI=true donghakim1992/docker-with-react npm run test
 
 after_success:
   - docker build -t donghakim1992/docker-client ./client
