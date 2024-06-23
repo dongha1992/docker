@@ -1,0 +1,36 @@
+{
+  "AWSEBDockerrunVersion": 1,
+  "containerDefinitions": [
+    {
+      "name": "client",
+      "image": "donghakm92/docker-client",
+      "hostname": "client",
+      "essential": false,
+      "memory": 128
+    },
+    {
+      "name": "backend",
+      "image": "donghakm92/docker-backend",
+      "hostname": "backend",
+      "essential": false,
+      "memory": 128
+    },
+    {
+      "name": "nginx",
+      "image": "donghakm92/docker-nginx",
+      "hostname": "nginx",
+      "essential": false,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": [
+        "client",
+        "backend"
+      ]
+    }
+  ]
+}
