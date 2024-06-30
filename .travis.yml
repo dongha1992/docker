@@ -18,3 +18,15 @@ after_success:
   - docker push donghakim1992/docker-client
   - docker push donghakim1992/docker-backend
   - docker push donghakim1992/docker-nginx
+
+deploy:
+  provider: elasticbeanstalk
+  region: "ap-northeast-2"
+  app: "docker-react-3"
+  env: "Docker-react-3-env"
+  bucket_name: elasticbeanstalk-ap-northeast-2-851725594694
+  bucket_path: "docker-react-3"
+  on:
+    branch: main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
