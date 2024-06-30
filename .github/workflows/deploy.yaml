@@ -1,0 +1,31 @@
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+      - run: docker build -t dongakim92/react-test-app -f ./client/Dockerfile.dev ./client
+      - run: docker run -e CI=true dongakim92/react-test-app npm test
+
+      - run: docker build -t dongakim92/docker-client ./client
+      - run: docker build -t dongakim92/docker-nginx ./nginx
+      - run: docker build -t dongakim92/docker-backend ./backend
+
+      - run: docker push dongakim92/docker-client
+      - run: docker push dongakim92/docker-nginx
+      - run: docker push dongakim92/docker-backend
+
+      - name: Generate deployment package
+        run: zip -r deploy.zip -x '*.git*'
+
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v18
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+          application_name: docker-react-3
+          environment_name: Docker-react-3-env
+          existing_bucket_name: elasticbeanstalk-ap-northeast-2-851725594694
+          region: ap-northeast-2
+          version_label: ${{ github.sha }}
+          deployment_package: deploy.zip
